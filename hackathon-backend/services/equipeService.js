@@ -1,4 +1,4 @@
-const equipeService = require('../services/equipeService');
+const equipeService = require('./equipeService');
 
 // Função para obter todas as equipes
 const getEquipes = async (req, res) => {

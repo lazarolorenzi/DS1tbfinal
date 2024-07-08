@@ -1,4 +1,4 @@
-const avaliadorService = require('../services/avaliadorService');
+const avaliadorService = require('./avaliadorService');
 
 // Função para obter todos os avaliadores
 const getAvaliadores = async (req, res) => {
