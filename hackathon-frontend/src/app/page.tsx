@@ -107,7 +107,7 @@ export default function Home() {
             </div>
           </Link></nav>
 
-        <h1 className="text-3xl font-bold mb-8 text-center text-white">Resumo</h1>
+        <h1 className="text-3xl font-bold mb-8 text-center text-white">Dashboard</h1>
 
         <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
           {/* Resumo de dados */}
