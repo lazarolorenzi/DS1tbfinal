@@ -7,90 +7,177 @@ import api from "../../services/api";
 interface IFormDataAvaliacao {
   avaliador_id: number;
   equipe_id: number;
-  notas: Record<string, any>; 
+  notas: {
+    originalidade: number;
+    impacto: number;
+    execucao: number;
+    apresentacao: number;
+    viabilidade: number;
+  };
 }
+
+const criteriosAvaliacao: [keyof IFormDataAvaliacao["notas"], string][] = [
+  ["originalidade", "Originalidade do Projeto"],
+  ["impacto", "Impacto Potencial"],
+  ["execucao", "Execução Técnica"],
+  ["apresentacao", "Apresentação e Demonstração"],
+  ["viabilidade", "Viabilidade e Sustentabilidade"],
+];
 
 export default function NewAvaliacao() {
   const router = useRouter();
-  const [formDataAvaliacao, setFormDataAvaliacao] = useState<IFormDataAvaliacao>({
+  const [formDataAvaliacao, setFormDataAvaliacao] = useState<
+      IFormDataAvaliacao
+  >({
     avaliador_id: 0,
     equipe_id: 0,
-    notas: {}, 
+    notas: {
+      originalidade: 0,
+      impacto: 0,
+      execucao: 0,
+      apresentacao: 0,
+      viabilidade: 0,
+    },
   });
 
   const handleChange = (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLSelectElement>
+      e:
+          | React.ChangeEvent<HTMLInputElement>
+          | React.ChangeEvent<HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setFormDataAvaliacao((prevFormData) => ({
-      ...prevFormData,
-      [name]: name === "avaliador_id" || name === "equipe_id" ? parseInt(value) : value,
-    }));
+
+    setFormDataAvaliacao((prevFormData) => {
+      if (name === "avaliador_id" || name === "equipe_id") {
+        return {
+          ...prevFormData,
+          [name]: parseInt(value, 10),
+        };
+      } else if (name in prevFormData.notas) { // Verifica se a chave existe em notas
+        return {
+          ...prevFormData,
+          notas: {
+            ...prevFormData.notas,
+            [name]: parseInt(value, 10),
+          },
+        };
+      } else {
+        return prevFormData; // Retorna o estado anterior se a chave não for válida
+      }
+    });
   };
+
 
   const makePostRequest = async () => {
     try {
-      const response = await api.post("/avaliacoes", {
-        avaliador_id: formDataAvaliacao.avaliador_id,
-        equipe_id: formDataAvaliacao.equipe_id,
-        notas: formDataAvaliacao.notas, 
-      });
-
+      const response = await api.post("/avaliacoes", formDataAvaliacao);
       console.log("Dados enviados com sucesso!");
       console.log("Resposta:", response.data);
-      router.push("/"); 
-    } catch (error) {
-      console.error("Erro:", error);
+      router.push("/");
+    }catch (error: any) {
+      if (error.response) {
+        // Erro do servidor com resposta
+        alert(`Erro do servidor: ${error.response.data.error}`);
+      } else if (error.request) {
+        // A requisição foi feita mas não houve resposta
+        alert("Erro de rede: Não foi possível conectar ao servidor.");
+      } else {
+        // Algo deu errado ao configurar a requisição
+        alert("Erro: " + error.message);
+      }
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center my-8">
-      <form className="flex flex-col gap-3 p-12 items-center w-[50%] bg-slate-700 rounded-md border-white border-2 border-spacing-2">
-        <div className="flex flex-col gap-3 items-center justify-center w-[97%]">
-          <label>Avaliador ID</label>
-          <input
-            type="number"
-            name="avaliador_id"
-            value={formDataAvaliacao.avaliador_id}
-            onChange={handleChange}
-            placeholder="ID do avaliador"
-            className="border border-gray-300 w-[50%] rounded-md px-3 py-2 mb-3 text-black"
-          />
-        </div>
-
-        <div className="flex flex-col gap-3 items-center justify-center w-[97%]">
-          <label>Equipe ID</label>
-          <input
-            type="number"
-            name="equipe_id"
-            value={formDataAvaliacao.equipe_id}
-            onChange={handleChange}
-            placeholder="ID da equipe"
-            className="border border-gray-300 w-[50%] rounded-md px-3 py-2 mb-3 text-black"
-          />
-        </div>
-
-        <div className="flex flex-row gap-6 items-center justify-center w-[97%]">
-          <button
-            type="button"
-            onClick={makePostRequest}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
+      <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-900 to-indigo-900">
+        <form className="bg-white p-8 rounded-lg shadow-md w-96">
+          <h2 className="text-2xl font-semibold text-center mb-4 text-gray-800">
             Cadastrar Avaliação
-          </button>
+          </h2>
 
-          <button
-            type="button"
-            onClick={() => router.push("/")}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Cancelar
-          </button>
-        </div>
-      </form>
-    </div>
+          {/* Campos de ID do Avaliador e Equipe */}
+          <div className="mb-4">
+            <label
+                htmlFor="avaliador_id"
+                className="block text-gray-700 text-sm font-bold mb-2"
+            >
+              Avaliador ID
+            </label>
+            <input
+                type="number"
+                id="avaliador_id"
+                name="avaliador_id"
+                value={formDataAvaliacao.avaliador_id}
+                onChange={handleChange}
+                placeholder="ID do avaliador"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label
+                htmlFor="equipe_id"
+                className="block text-gray-700 text-sm font-bold mb-2"
+            >
+              Equipe ID
+            </label>
+            <input
+                type="number"
+                id="equipe_id"
+                name="equipe_id"
+                value={formDataAvaliacao.equipe_id}
+                onChange={handleChange}
+                placeholder="ID da equipe"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+
+          {/* Campos de Notas */}
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold mb-2 text-gray-800">Notas:</h3>
+            {criteriosAvaliacao.map(([criterio, label]) => (
+                <div key={criterio} className="flex items-center mb-2">
+                  <label
+                      htmlFor={criterio}
+                      className="block text-gray-700 text-sm font-bold mr-2 w-48"
+                  >
+                    {label} (0-10):
+                  </label>
+                  <select
+                      id={criterio}
+                      name={criterio}
+                      value={formDataAvaliacao.notas[criterio]}
+                      onChange={handleChange}
+                      className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  >
+                    {[...Array(11).keys()].map((i) => (
+                        <option key={i} value={i}>
+                          {i}
+                        </option>
+                    ))}
+                  </select>
+                </div>
+            ))}
+          </div>
+
+          {/* Botões Cadastrar e Cancelar */}
+          <div className="flex items-center justify-between">
+            <button
+                type="button"
+                onClick={makePostRequest}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Cadastrar Avaliação
+            </button>
+            <button
+                type="button"
+                onClick={() => router.push("/")}
+                className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </main>
   );
 }

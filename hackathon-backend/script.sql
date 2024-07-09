@@ -1,35 +1,18 @@
--- Passo 1: Conecte-se ao servidor PostgreSQL
--- No terminal, execute:
--- psql -U your_superuser
-
--- Passo 2: Crie o banco de dados
-CREATE DATABASE projeto;
-
--- Passo 3: Conecte-se ao banco de dados 'projeto'
--- No terminal, execute:
--- \c projeto
-
--- Passo 4: Crie a tabela 'users'
-CREATE TABLE users (
+CREATE TABLE avaliacoes (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  login VARCHAR(255) NOT NULL UNIQUE,
-  password VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL UNIQUE,
-  profile VARCHAR(255) NOT NULL,
-  cpf CHAR(11) NOT NULL UNIQUE,
-  birthdate DATE NOT NULL,
-  status BOOLEAN NOT NULL
+  avaliador_id INTEGER REFERENCES avaliadores(id) NOT NULL,
+  equipe_id INTEGER REFERENCES equipes(id) NOT NULL,
+  notas JSONB NOT NULL,
+  UNIQUE(avaliador_id, equipe_id)
+);
+CREATE TABLE equipes (
+  id SERIAL PRIMARY KEY,
+  nome VARCHAR(255) NOT NULL UNIQUE
 );
 
--- Passo 5: Crie a tabela 'enderecos'
-CREATE TABLE enderecos (
+CREATE TABLE avaliadores (
   id SERIAL PRIMARY KEY,
-  user_id INT NOT NULL,
-  street VARCHAR(255) NOT NULL,
-  city VARCHAR(255) NOT NULL,
-  state VARCHAR(255) NOT NULL,
-  zip_code VARCHAR(20) NOT NULL,
-  country VARCHAR(255) NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+  nome VARCHAR(255) NOT NULL UNIQUE,
+  login VARCHAR(255) NOT NULL UNIQUE,
+  senha VARCHAR(255) NOT NULL
 );
