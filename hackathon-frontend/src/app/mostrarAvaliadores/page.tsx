@@ -33,6 +33,7 @@ export default function Home() {
       fetchAvaliadores();
     } catch (error) {
       console.error("Erro ao excluir avaliador:", error);
+      alert("Erro ao excluir avaliador. Por favor, tente novamente.");
     }
   };
 

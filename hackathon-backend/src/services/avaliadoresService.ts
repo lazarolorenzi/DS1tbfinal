@@ -26,22 +26,50 @@ class AvaliadorService {
   }
 
   async getAllAvaliadores(): Promise<Avaliador[] | null> {
-    return this.avaliadorModel.findAll();
+    try {
+      return await this.avaliadorModel.findAll();
+    } catch (error: any) {
+      throw new Error(`Erro ao buscar avaliadores: ${error.message}`);
+    }
   }
 
   async getAvaliadorById(id: number): Promise<Avaliador | null> {
-    return this.avaliadorModel.findById(id);
+    try {
+      const avaliador = await this.avaliadorModel.findById(id);
+      if (!avaliador) {
+        throw new Error("Avaliador não encontrado");
+      }
+      return avaliador;
+    } catch (error: any) {
+      console.error("Erro ao buscar avaliador por ID:", error);
+      throw new Error(`Erro ao buscar avaliador: ${error.message}`);
+    }
   }
 
-  async updateAvaliador(
-    id: number,
-    updateData: Partial<Avaliador>
-  ): Promise<Avaliador | null> {
-    return this.avaliadorModel.update(id, updateData);
+  async updateAvaliador(id: number, updateData: Partial<Avaliador>): Promise<Avaliador | null> {
+    try {
+      const avaliador = await this.avaliadorModel.update(id, updateData);
+      if (!avaliador) {
+        throw new Error("Avaliador não encontrado");
+      }
+      return avaliador;
+    } catch (error: any) {
+      console.error("Erro ao atualizar avaliador:", error);
+      if (error.code === '23505') { // Violação de unique constraint (login duplicado)
+        throw new Error("Login já existe");
+      } else {
+        throw new Error(`Erro ao atualizar avaliador: ${error.message}`);
+      }
+    }
   }
 
   async deleteAvaliador(id: number): Promise<void> {
-    return this.avaliadorModel.delete(id);
+    try {
+      await this.avaliadorModel.delete(id);
+    } catch (error: any) {
+      console.error("Erro ao deletar avaliador:", error);
+      throw new Error(`Erro ao deletar avaliador: ${error.message}`);
+    }
   }
 }
 

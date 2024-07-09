@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import api from '../../services/api'; // Importe seu arquivo de configuração do Axios/API aqui
+import api from '../../services/api';
 
 interface IEquipe {
   id: number;
