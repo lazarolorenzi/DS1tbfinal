@@ -14,9 +14,9 @@ class AvaliadorController {
       const avaliador = await avaliadorService.createAvaliador(avaliadorData);
       return res.status(201).json(avaliador);
     } catch (error: any) {
-      console.error("Erro ao criar avaliador:", error); // Log de erro detalhado
+      console.error("Erro ao criar avaliador:", error);
       if (error.message === 'Login já existe') {
-        return res.status(409).json({ error: error.message }); // Erro 409 para conflito (login duplicado)
+        return res.status(409).json({ error: error.message });
       }
       return res.status(500).json({
         error: "Erro interno do servidor ao criar avaliador",
@@ -27,7 +27,7 @@ class AvaliadorController {
   async getAvaliadores(req: Request, res: Response): Promise<Response> {
     try {
       const avaliadores = await avaliadorService.getAllAvaliadores();
-      return res.status(200).json(avaliadores); // Retorna 200 mesmo se não houver avaliadores
+      return res.status(200).json(avaliadores);
     } catch (error: any) {
       console.error("Erro ao buscar avaliadores:", error);
       return res.status(500).json({ error: "Erro interno do servidor ao buscar avaliadores" });
@@ -77,7 +77,7 @@ class AvaliadorController {
     try {
       const avaliadorId = Number(req.params.id);
       await avaliadorService.deleteAvaliador(avaliadorId);
-      return res.status(204).json({}); // 204 No Content após exclusão bem-sucedida
+      return res.status(204).json({});
     } catch (error: any) {
       console.error("Erro ao deletar avaliador:", error);
       return res.status(500).json({ error: "Erro interno do servidor ao deletar avaliador" });

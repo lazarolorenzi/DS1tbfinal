@@ -77,33 +77,33 @@ export default function Home() {
 
       <main className="mx-auto  px-4 bg-gradient-to-br from-blue-900 to-indigo-900 min-h-screen">
         <nav className="flex space-x-4 mb-8"><Link href="/criarAvaliador">
-          <div className="hadow-lg  p-6 text-center hover:bg-blue-100 transition duration-300">
-            <h2 className="text-xl font-semibold text-gray-800">Criar Avaliador</h2>
+          <div className=" p-6 text-center hover:bg-green-500 transition duration-300">
+            <h2 className="text-xl font-semibold text-white">Criar Avaliador</h2>
           </div>
         </Link>
           <Link href="/criarEquipe">
-            <div className=" r  shadow-lg p-6 text-center hover:bg-blue-100 transition duration-300">
-              <h2 className="text-xl font-semibold text-gray-800">Criar Equipe</h2>
+            <div className=" r  shadow-lg p-6 text-center hover:bg-green-500 transition duration-300">
+              <h2 className="text-xl font-semibold text-white">Criar Equipe</h2>
             </div>
           </Link>
           <Link href="/mostrarAvaliacoes">
-            <div className=" shadow-lg p-6 text-center hover:bg-blue-100 transition duration-300">
-              <h2 className="text-xl font-semibold text-gray-800">Mostrar Avaliações</h2>
+            <div className=" shadow-lg p-6 text-center hover:bg-green-500 transition duration-300">
+              <h2 className="text-xl font-semibold text-white">Mostrar Avaliações</h2>
             </div>
           </Link>
           <Link href="/mostrarAvaliadores">
-            <div className=" shadow-lg p-6 text-center hover:bg-blue-100 transition duration-300">
-              <h2 className="text-xl font-semibold text-gray-800">Mostrar Avaliadores</h2>
+            <div className=" shadow-lg p-6 text-center hover:bg-green-500 transition duration-300">
+              <h2 className="text-xl font-semibold text-white">Mostrar Avaliadores</h2>
             </div>
           </Link>
           <Link href="/mostrarEquipes">
-            <div className="shadow-lg p-6 text-center hover:bg-blue-100 transition duration-300">
-              <h2 className="text-xl font-semibold text-gray-800">Mostrar Equipes</h2>
+            <div className="shadow-lg p-6 text-center hover:bg-green-500 transition duration-300">
+              <h2 className="text-xl font-semibold text-white">Mostrar Equipes</h2>
             </div>
           </Link>
-          <Link href="/vincularAvaliador">
-            <div className="shadow-lg p-6 text-center hover:bg-blue-100 transition duration-300">
-              <h2 className="text-xl font-semibold text-gray-800">Vincular Avaliador</h2>
+          <Link href="/vincularEquipe">
+            <div className="shadow-lg p-6 text-center hover:bg-green-500 transition duration-300">
+              <h2 className="text-xl font-semibold text-white">Vincular Equipe</h2>
             </div>
           </Link></nav>
 
@@ -135,8 +135,6 @@ export default function Home() {
               <p className="text-center text-gray-700 text-4xl font-bold mb-4">{numAvaliacoes}</p>
             </div>
           </div>
-
-          {/* Links de navegação */}
 
         </section>
       </main>

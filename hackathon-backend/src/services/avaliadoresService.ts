@@ -3,11 +3,10 @@
 import { Avaliador, AvaliadorModel } from "../models/avaliadoresModel";
 
 class AvaliadorService {
-  constructor(private avaliadorModel: AvaliadorModel) {} // Injeção de dependência
+  constructor(private avaliadorModel: AvaliadorModel) {}
 
   async createAvaliador(avaliadorData: Avaliador): Promise<Avaliador> {
     try {
-      // Validação dos dados de entrada (adicione sua lógica aqui)
       if (!avaliadorData.nome || !avaliadorData.login || !avaliadorData.senha) {
         throw new Error("Campos nome, login e senha são obrigatórios");
       }
@@ -16,8 +15,8 @@ class AvaliadorService {
     } catch (error: any) {
       // Tratamento de erros mais específico
       if (error.code === "23505") {
-        throw new Error("Login já existe"); // Exemplo de erro de chave duplicada
-      } else if (error instanceof Error) { // Verifica se o erro é do tipo Error
+        throw new Error("Login já existe");
+      } else if (error instanceof Error) {
         throw new Error(`Erro ao criar avaliador: ${error.message}`);
       } else {
         throw new Error("Erro desconhecido ao criar avaliador");
@@ -55,7 +54,7 @@ class AvaliadorService {
       return avaliador;
     } catch (error: any) {
       console.error("Erro ao atualizar avaliador:", error);
-      if (error.code === '23505') { // Violação de unique constraint (login duplicado)
+      if (error.code === '23505') {
         throw new Error("Login já existe");
       } else {
         throw new Error(`Erro ao atualizar avaliador: ${error.message}`);

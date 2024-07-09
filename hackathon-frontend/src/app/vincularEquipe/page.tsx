@@ -53,7 +53,7 @@ export default function NewAvaliacao() {
           ...prevFormData,
           [name]: parseInt(value, 10),
         };
-      } else if (name in prevFormData.notas) { // Verifica se a chave existe em notas
+      } else if (name in prevFormData.notas) {
         return {
           ...prevFormData,
           notas: {
@@ -62,7 +62,7 @@ export default function NewAvaliacao() {
           },
         };
       } else {
-        return prevFormData; // Retorna o estado anterior se a chave não for válida
+        return prevFormData;
       }
     });
   };
@@ -95,13 +95,12 @@ export default function NewAvaliacao() {
             Cadastrar Avaliação
           </h2>
 
-          {/* Campos de ID do Avaliador e Equipe */}
           <div className="mb-4">
             <label
                 htmlFor="avaliador_id"
                 className="block text-gray-700 text-sm font-bold mb-2"
             >
-              Avaliador ID
+              Avaliador ID (No caso se tivesse um login, pegaria o ID a partir do login)
             </label>
             <input
                 type="number"
