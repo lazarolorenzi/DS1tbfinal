@@ -3,14 +3,26 @@
 import { Avaliador, AvaliadorModel } from "../models/avaliadoresModel";
 
 class AvaliadorService {
-  private avaliadorModel: AvaliadorModel;
-
-  constructor() {
-    this.avaliadorModel = new AvaliadorModel();
-  }
+  constructor(private avaliadorModel: AvaliadorModel) {} // Injeção de dependência
 
   async createAvaliador(avaliadorData: Avaliador): Promise<Avaliador> {
-    return this.avaliadorModel.create(avaliadorData);
+    try {
+      // Validação dos dados de entrada (adicione sua lógica aqui)
+      if (!avaliadorData.nome || !avaliadorData.login || !avaliadorData.senha) {
+        throw new Error("Campos nome, login e senha são obrigatórios");
+      }
+
+      return await this.avaliadorModel.create(avaliadorData);
+    } catch (error: any) {
+      // Tratamento de erros mais específico
+      if (error.code === "23505") {
+        throw new Error("Login já existe"); // Exemplo de erro de chave duplicada
+      } else if (error instanceof Error) { // Verifica se o erro é do tipo Error
+        throw new Error(`Erro ao criar avaliador: ${error.message}`);
+      } else {
+        throw new Error("Erro desconhecido ao criar avaliador");
+      }
+    }
   }
 
   async getAllAvaliadores(): Promise<Avaliador[] | null> {
@@ -33,4 +45,4 @@ class AvaliadorService {
   }
 }
 
-export default new AvaliadorService();
+export default new AvaliadorService(new AvaliadorModel());
