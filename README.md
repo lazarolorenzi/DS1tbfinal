@@ -1,13 +1,68 @@
-Tutorial Projeto.
+# DS1tbfinal
 
-Para executar o projeto será nescessario ter node.js, postgres instalado localmente no computador.
+Este é o projeto final do curso DS1tb. O projeto consiste em um sistema web desenvolvido com Node.js no backend e um frontend em React. O banco de dados utilizado é o PostgreSQL.
 
-PASSO A PASSO,
-crie um script sql e execute os codigos listados em script.sql que estão dentro da pasta do backend
+## Pré-requisitos
 
-abra o terminal em uma pasta de preferencia e execute a segunte serie de comandos no terminal:
+Antes de começar, certifique-se de ter as seguintes ferramentas instaladas em seu ambiente de desenvolvimento:
 
+- [Node.js](https://nodejs.org/)
+- [PostgreSQL](https://www.postgresql.org/)
+
+## Passo a Passo para Execução do Projeto
+
+### 1. Clonando o Repositório
+
+Primeiramente, clone o repositório do projeto:
+
+```bash
 git clone https://github.com/lazarolorenzi/DS1tbfinal.git
+```
 
-entre no terminal em cada um dos projetos sendo eles hackathon-backend e hackathon-frontend
-em cada um execute o comando NPM I para instalar as dependencias do projeto após isso, execute o backend usando o comando nodemon, e dps execute o comando npm run dev no front-end
+### 2.Configurando o Banco de Dados
+Crie um banco de dados no PostgreSQL.
+
+Execute os scripts SQL localizados na pasta hackathon-backend para configurar o banco de dados. Abra seu terminal e navegue até a pasta hackathon-backend:
+
+```bash
+cd DS1tbfinal/hackathon-backend
+```
+Execute os comandos listados no arquivo script.sql dentro da pasta hackathon-backend no seu banco de dados PostgreSQL.
+
+### 3. Instalando Dependências
+Navegue até a pasta do backend e instale as dependências:
+
+```bash
+cd DS1tbfinal/hackathon-backend
+npm install
+```
+Em seguida, faça o mesmo para o frontend:
+
+```bash
+cd ../hackathon-frontend
+npm install
+```
+### 4. Executando o Projeto
+## Backend
+Navegue até a pasta do backend:
+
+```bash
+cd DS1tbfinal/hackathon-backend
+```
+Execute o servidor backend com o comando:
+
+```bash
+nodemon
+```
+## Frontend
+Abra um novo terminal e navegue até a pasta do frontend:
+
+```bash
+cd DS1tbfinal/hackathon-frontend
+```
+Execute o servidor frontend com o comando:
+
+```bash
+npm run dev
+```
+Agora, o projeto deve estar rodando localmente em seu ambiente de desenvolvimento.
